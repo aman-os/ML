@@ -2,6 +2,8 @@ import joblib
 import numpy as np
 import streamlit as st
 import pandas as pd
+# Load dataset
+df = pd.read_csv(r"C:\Users\amanc\Downloads\ML Dataset\placedata v2.0 synthetic.csv")
 
 # Function to load the saved model and label encoders
 def load_model():
