@@ -13,12 +13,16 @@ if uploaded_file:
 
 # Function to load the saved model and label encoders
 def load_model():
-    model = joblib.load(r"C:\Users\amanc\PYTHON JUP\ML\Project\AdaBoostClassifier_model.pkl")
-    label_encoders = {
-        'ExtracurricularActivities': joblib.load(r"C:\Users\amanc\PYTHON JUP\ML\Project\L1"),
-        'PlacementTraining': joblib.load(r"C:\Users\amanc\PYTHON JUP\ML\Project\L2"),
-        'PlacementStatus': joblib.load(r"C:\Users\amanc\PYTHON JUP\ML\Project\L3"),
-    }
+    model = uploaded_file = st.file_uploader("Upload Model File (.pkl)", type="pkl")
+    if uploaded_file is not None:
+        model = joblib.load(uploaded_file)  # Load the uploaded model
+        st.write("Model loaded successfully!")
+        label_encoders = {
+            'ExtracurricularActivities': joblib.load(r"C:\Users\amanc\PYTHON JUP\ML\Project\L1"),
+            'PlacementTraining': joblib.load(r"C:\Users\amanc\PYTHON JUP\ML\Project\L2"),
+            'PlacementStatus': joblib.load(r"C:\Users\amanc\PYTHON JUP\ML\Project\L3")
+        
+        }
     return model, label_encoders
 
 # Preprocessing function
