@@ -17,13 +17,29 @@ def load_model():
     if uploaded_file is not None:
         model = joblib.load(uploaded_file)  # Load the uploaded model
         st.write("Model loaded successfully!")
-        label_encoders = {
-            'ExtracurricularActivities': joblib.load(r"C:\Users\amanc\PYTHON JUP\ML\Project\L1"),
-            'PlacementTraining': joblib.load(r"C:\Users\amanc\PYTHON JUP\ML\Project\L2"),
-            'PlacementStatus': joblib.load(r"C:\Users\amanc\PYTHON JUP\ML\Project\L3")
-        
-        }
-    return model, label_encoders
+        import joblib
+import os
+
+def load_model():
+    model_path = "AdaBoostClassifier_model.pkl"  # Adjust path if needed
+    encoder_path = "label_encoders.pkl"  # If using label encoders
+
+    # Initialize label_encoders
+    label_encoders = None  
+
+    # Check if model file exists before loading
+    if os.path.exists(model_path):
+        model = joblib.load(model_path)
+    else:
+        raise FileNotFoundError(f"Error: Model file not found at {model_path}")
+
+    # Check if label encoders exist before loading
+    if os.path.exists(encoder_path):
+        label_encoders = joblib.load(encoder_path)  
+    else:
+        print("Warning: Label encoders not found. Proceeding without them.")
+
+    return model, label_encoders  # Always returns something
 
 # Preprocessing function
 def preprocess_input(data, label_encoders):
@@ -59,3 +75,4 @@ if st.button("Predict Placement Status"):
     placement_status_label = label_encoders['PlacementStatus'].inverse_transform(prediction)[0]
     
     st.write(f"The predicted Placement Status of the candidate is: **{placement_status_label}**")
+
