@@ -3,11 +3,24 @@ import numpy as np
 import streamlit as st
 import pandas as pd
 # Load dataset
+import streamlit as st
+import pandas as pd
+
+# Load the dataset
 uploaded_file = st.file_uploader("Upload CSV file", type="csv")
 
-if uploaded_file:
-    df = pd.read_csv(uploaded_file)
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)  # Read uploaded file
     st.write(df.head())  # Display first few rows
+else:
+    st.warning("Please upload a CSV file.")  # Show warning
+    df = None  # Set df to None when no file is uploaded
+
+# Ensure df exists before using it
+if df is not None:
+    st.number_input("CGPA", min_value=int(df['CGPA'].min()), max_value=int(df['CGPA'].max()))
+else:
+    st.error("Error: No data available. Please upload a valid CSV file.")
 
 
 
